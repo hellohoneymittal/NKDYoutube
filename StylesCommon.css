@@ -1609,15 +1609,15 @@ label.required::after {
 
 .video-container {
   margin-bottom: 0px;
-  padding: 10px;
+  margin-top: 5px;
+  padding: 12px;
   border-radius: 10px;
   background-color: #4caf50; /* Soft green */
   border: 1px solid #2e512f;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for a subtle effect */
-  max-width: 20rem;
   /* Ensures the container maintains aspect ratio */
   position: relative;
-  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  padding-bottom: 53.25%; /* 16:9 aspect ratio */
   height: 0;
 }
 
