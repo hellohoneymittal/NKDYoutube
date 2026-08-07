@@ -28,7 +28,7 @@ async function fetchPlaylists() {
     const playlistsResponse = await fetch(
       BASE_URL_YOUTUBE +
         "/playlists?part=snippet&channelId=UCyPwLzmeTmyhpDsCBrMubbQ&maxResults=50&key=" +
-        API_KEY_YOUTUBE_NKD
+        API_KEY_YOUTUBE_NKD,
     );
     IsLoading(false);
 
@@ -128,7 +128,8 @@ async function fetchPlaylistItems(playlistName) {
         break;
       }
       case "Bhagavad Gita As It Is":
-      case "Bhagavad Gita as it is Version 2.0": {
+      case "Bhagavad Gita as it is Version 2.0":
+      case "Bhagavad Gita As It Is - Interactive Series": {
         let bgResponse;
         if (completeYoutubeData[playlistName]) {
           bgResponse = completeYoutubeData[playlistName];
@@ -142,7 +143,7 @@ async function fetchPlaylistItems(playlistName) {
             "youTubeItemAccordion",
             "101",
             { title: `${title} (${data.length})`, data: data },
-            onYouTubeVideoClick
+            onYouTubeVideoClick,
           );
         }
         break;
@@ -155,7 +156,7 @@ async function fetchPlaylistItems(playlistName) {
             "youTubeItemAccordion",
             "101",
             { title: `${playlistName} (${data.length})`, data: data },
-            onYouTubeVideoClick
+            onYouTubeVideoClick,
           );
         } else {
           modifiedApiResponse = apiResponse.result.map(function (row) {
@@ -176,7 +177,7 @@ async function fetchPlaylistItems(playlistName) {
               title: `${playlistName} (${modifiedApiResponse.length})`,
               data: modifiedApiResponse,
             },
-            onYouTubeVideoClick
+            onYouTubeVideoClick,
           );
         }
       }
@@ -193,7 +194,7 @@ function CREATE_ACCORDIAN_ITEM_WITH_LINKS_YOUTBUE(
   accordionContainerId,
   parentId,
   item,
-  callback
+  callback,
 ) {
   debugger;
   const accordionContainer = document.getElementById(accordionContainerId);
@@ -297,13 +298,13 @@ const populateCCData = (playlistName, rowData) => {
     switch (playlistName) {
       case "Sri Chaitanya Charitamrit":
         match = title.match(
-          /(Adi Leela|ADL|Madhya Leela|ML|Antya Lila|AL).*?(\d+)\.\d+/i
+          /(Adi Leela|ADL|Madhya Leela|ML|Antya Lila|AL).*?(\d+)\.\d+/i,
         );
         break;
       case "Sri Chaitanya Mangal":
       case "Sri Chaitanya Bhagwat":
         match = title.match(
-          /(Sutra Khand|Adi Khand|Madhya Khand|Antya Khand|Shesh Khand|Balyaleela|Balya Leela|Paugand Leela|Kishore Leela|Madhya leela|Mahya Khand).*?(\d+)\.\d+/i
+          /(Sutra Khand|Adi Khand|Madhya Khand|Antya Khand|Shesh Khand|Balyaleela|Balya Leela|Paugand Leela|Kishore Leela|Madhya leela|Mahya Khand).*?(\d+)\.\d+/i,
         );
         break;
     }
@@ -420,7 +421,7 @@ const populateSBData = (rowData) => {
 function filterPlaylists(searchValue) {
   const lowerSearchValue = searchValue.toLowerCase();
   const filteredPlaylists = playlistsData?.filter((playlist) =>
-    playlist?.snippet?.title.toLowerCase().includes(lowerSearchValue)
+    playlist?.snippet?.title.toLowerCase().includes(lowerSearchValue),
   );
   renderPlaylists(filteredPlaylists);
 }
@@ -445,7 +446,7 @@ function filteryouTubeItem(searchValue) {
 
         for (const [chapterKey, videos] of Object.entries(chapters)) {
           const matchedVideos = videos.filter((video) =>
-            video.title.toLowerCase().includes(lowerSearchText)
+            video.title.toLowerCase().includes(lowerSearchText),
           );
           if (matchedVideos.length > 0) {
             matchingChapters[chapterKey] = matchedVideos;
@@ -466,7 +467,7 @@ function filteryouTubeItem(searchValue) {
 
       for (const [chapterKey, videos] of Object.entries(data)) {
         const matchedVideos = videos.filter((video) =>
-          video.title.toLowerCase().includes(lowerSearchText)
+          video.title.toLowerCase().includes(lowerSearchText),
         );
         if (matchedVideos.length > 0) {
           filteredData[chapterKey] = matchedVideos;
@@ -479,14 +480,14 @@ function filteryouTubeItem(searchValue) {
           "youTubeItemAccordion",
           "101",
           { title: `${title} (${videoList.length})`, data: videoList },
-          onYouTubeVideoClick
+          onYouTubeVideoClick,
         );
       }
       break;
     }
     default: {
       filteredData = data.filter((video) =>
-        video.title.toLowerCase().includes(lowerSearchText)
+        video.title.toLowerCase().includes(lowerSearchText),
       );
 
       document.getElementById("youTubeItemAccordion").innerHTML = "";
@@ -498,7 +499,7 @@ function filteryouTubeItem(searchValue) {
           title: `${currentPlayListName} (${filteredData.length})`,
           data: filteredData,
         },
-        onYouTubeVideoClick
+        onYouTubeVideoClick,
       );
       break;
     }
@@ -520,7 +521,7 @@ async function fetchYouTubeShorts() {
   try {
     IsLoading(true);
     const shortsResponse = await fetch(
-      `${BASE_URL_YOUTUBE}/search?part=snippet&channelId=UCyPwLzmeTmyhpDsCBrMubbQ&type=video&videoDuration=short&maxResults=50&key=${API_KEY_YOUTUBE_NKD}`
+      `${BASE_URL_YOUTUBE}/search?part=snippet&channelId=UCyPwLzmeTmyhpDsCBrMubbQ&type=video&videoDuration=short&maxResults=50&key=${API_KEY_YOUTUBE_NKD}`,
     );
     IsLoading(false);
 

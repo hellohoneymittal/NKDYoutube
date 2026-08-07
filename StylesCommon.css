@@ -455,7 +455,9 @@ legend {
   width: 100%;
   overflow: hidden;
   text-align: center;
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
   cursor: pointer;
 }
 .image_card:hover {
@@ -512,7 +514,9 @@ legend {
   border-radius: 5px;
   cursor: pointer;
   background: #f9f9f9;
-  transition: background 0.3s, transform 0.2s;
+  transition:
+    background 0.3s,
+    transform 0.2s;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -976,7 +980,9 @@ body {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
+  transition:
+    background-color 0.3s,
+    transform 0.3s;
 }
 
 .data-input-buttons button:hover,
@@ -1076,7 +1082,7 @@ body {
   padding: 20px;
   border-radius: 16px;
   width: 90%;
-  max-width: 21rem;
+  max-width: 30rem;
   text-align: center;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -1392,10 +1398,14 @@ body {
 @keyframes textGlow {
   0%,
   100% {
-    text-shadow: 0 0 4px #a5d6a7, 0 0 10px #81c784;
+    text-shadow:
+      0 0 4px #a5d6a7,
+      0 0 10px #81c784;
   }
   50% {
-    text-shadow: 0 0 10px #66bb6a, 0 0 20px #43a047;
+    text-shadow:
+      0 0 10px #66bb6a,
+      0 0 20px #43a047;
   }
 }
 @keyframes letterFloat {
@@ -1494,7 +1504,8 @@ body {
   line-height: 1.5;
   font-weight: 600;
   text-align: center;
-  font-family: "Noto Sans Devanagari", "Arial", sans-serif; /* For nice Devanagari */
+  font-family:
+    "Noto Sans Devanagari", "Arial", sans-serif; /* For nice Devanagari */
   color: #1b5e20;
 }
 
@@ -1639,7 +1650,9 @@ label.required::after {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   display: inline-block;
   margin: 1% 0;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .popup-content .radio-container:hover {
@@ -1734,7 +1747,9 @@ input[type="radio"] {
   font-weight: bold;
   color: #333;
   text-align: center;
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 }
 
 .running {
