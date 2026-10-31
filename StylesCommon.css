@@ -3844,6 +3844,10 @@ button.shorts-sheet-close {
     overflow-anchor: none;
   }
 
+  .chapter-group.is-instantly-closed > .chapter-group__panel {
+    transition: none;
+  }
+
   /* Cards become YouTube mobile rows: thumbnail left, text right */
   .image_container {
     grid-template-columns: 1fr;

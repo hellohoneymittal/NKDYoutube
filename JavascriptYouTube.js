@@ -1038,19 +1038,42 @@ function createChapterGroup(title, stats, grid) {
   group.querySelector(".chapter-group__inner").appendChild(grid);
   group
     .querySelector(".chapter-group__head")
-    .addEventListener("click", () =>
-      setChapterGroupOpen(group, !group.classList.contains("open")),
-    );
+    .addEventListener("click", () => toggleChapterGroup(group));
   return group;
 }
 
+function toggleChapterGroup(group) {
+  const open = !group.classList.contains("open");
+  if (
+    !open ||
+    !window.matchMedia("(max-width: 640px)").matches ||
+    ![...group.parentElement.querySelectorAll(":scope > .chapter-group.open")]
+      .some((other) => other !== group)
+  ) {
+    setChapterGroupOpen(group, open);
+    return;
+  }
+
+  const screen = document.getElementById(youTubePlayListItemContainer);
+  const head = group.querySelector(".chapter-group__head");
+  const initialTop = head.getBoundingClientRect().top;
+  setChapterGroupOpen(group, true, true);
+  screen.scrollTop += head.getBoundingClientRect().top - initialTop;
+}
+
 // One group open at a time, like an accordion
-function setChapterGroupOpen(group, open) {
+function setChapterGroupOpen(group, open, instantlyCloseSiblings = false) {
   if (open) {
+    group.classList.remove("is-instantly-closed");
     group.parentElement
       .querySelectorAll(":scope > .chapter-group.open")
       .forEach((other) => {
-        if (other !== group) setChapterGroupOpen(other, false);
+        if (other !== group) {
+          if (instantlyCloseSiblings) {
+            other.classList.add("is-instantly-closed");
+          }
+          setChapterGroupOpen(other, false);
+        }
       });
   }
   group.classList.toggle("open", open);
