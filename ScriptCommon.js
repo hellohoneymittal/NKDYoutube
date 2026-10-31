@@ -1,4 +1,19 @@
 let displayHide = "none";
+
+// iPhone Safari ignores user-scalable=no: block its pinch-zoom gesture and
+// two-finger zoom so the page stays at its normal size on touch screens
+["gesturestart", "gesturechange", "gestureend"].forEach((type) =>
+  document.addEventListener(type, (event) => event.preventDefault(), {
+    passive: false,
+  }),
+);
+document.addEventListener(
+  "touchmove",
+  (event) => {
+    if (event.touches.length > 1) event.preventDefault();
+  },
+  { passive: false },
+);
 let displayShow = "flex";
 let dispalyButtonShow = "inline-block";
 
@@ -381,6 +396,16 @@ function SHOW_SPECIFIC_DIV(divId) {
   allPopups.forEach((popup) => {
     popup.style.display = "none";
 
+    // Stop any video still playing on a screen we are leaving
+    if (popup.id !== divId) {
+      popup.querySelectorAll("iframe").forEach((iframe) => {
+        // data-keep-player iframes are stopped by their own page script
+        if (iframe.getAttribute("src") && !iframe.hasAttribute("data-keep-player")) {
+          iframe.src = "about:blank";
+        }
+      });
+    }
+
     const textboxes = popup.querySelectorAll('input[type="text"]');
     textboxes.forEach((textbox) => {
       textbox.value = ""; // Clear the value of the textbox
@@ -391,6 +416,8 @@ function SHOW_SPECIFIC_DIV(divId) {
   const targetDiv = document.getElementById(divId);
   if (targetDiv) {
     targetDiv.style.display = "flex"; // Adjust display style as per need
+    // Lets page scripts (e.g. the header search) react to the new screen
+    document.dispatchEvent(new CustomEvent("screenchange", { detail: divId }));
   } else {
     console.error(`Div with id '${divId}' not found.`);
   }

@@ -17,6 +17,9 @@ const GET_HEARING_REPORT_DATA_API =
   "https://script.google.com/macros/s/AKfycbyVYnlqM80Or-jMlhQLEWc8nLT-SG_ffUx0JUAknkP8odfC_MVvRPYKChQxxD3ryueJ/exec";
 const GET_SADHNA_REPORT_DATA_API =
   "https://script.google.com/macros/s/AKfycbyZizkyxYkhw4Jx0gC6ZpMugtO8jEZWs4neIbn7EdSUV2VqXeXBimdPPdmjW24-eFq9/exec";
+// Backend (Apps Script) that serves each YouTube playlist's videos
+const YOUTUBE_PLAYLIST_BACKEND_API =
+  "https://script.google.com/macros/s/AKfycbyZizkyxYkhw4Jx0gC6ZpMugtO8jEZWs4neIbn7EdSUV2VqXeXBimdPPdmjW24-eFq9/exec";
 const GET_JAPA_MONTHLY_AVG =
   "https://script.google.com/macros/s/AKfycbyZizkyxYkhw4Jx0gC6ZpMugtO8jEZWs4neIbn7EdSUV2VqXeXBimdPPdmjW24-eFq9/exec";
 
