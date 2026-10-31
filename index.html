@@ -2,10 +2,28 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#ffffff" />
     <title>NKD Youtube Channel</title>
+    <link rel="icon" type="image/svg+xml" href="icons/icon.svg" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="icons/icon-192.png"
+    />
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-    <link rel="stylesheet" href="StylesCommon.css" />
+    <link rel="stylesheet" href="StylesCommon.css?v=69" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -16,8 +34,170 @@
   </head>
   <body>
     <div class="primaryContainerDiv">
+      <header class="app-header">
+        <div class="app-header__inner">
+          <a
+            class="brand"
+            href="./"
+            onclick="goHome(event)"
+            aria-label="NKD YouTube home"
+          >
+            <span class="brand__logo" aria-hidden="true">
+              <img src="images/logo_transparent.svg" alt="" />
+            </span>
+            <span class="brand__text">
+              <span class="brand__name"
+                >NKD <span class="brand__yt">YouTube</span></span
+              >
+              <span class="brand__tag">Where bhakti meets life!</span>
+            </span>
+          </a>
+
+          <form
+            class="header-search"
+            role="search"
+            onsubmit="event.preventDefault(); submitHeaderSearch()"
+          >
+            <button
+              type="button"
+              class="header-search__back"
+              onclick="closeMobileSearch()"
+              aria-label="Close search"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <div class="header-search__field">
+              <input
+                type="text"
+                id="headerSearchInput"
+                class="header-search__input"
+                placeholder="Search playlists"
+                autocomplete="off"
+                enterkeyhint="search"
+                aria-label="Search"
+                oninput="onHeaderSearchInput(this.value)"
+              />
+              <button
+                type="button"
+                class="header-search__clear"
+                id="headerSearchClear"
+                onclick="clearHeaderSearch()"
+                aria-label="Clear search"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M18 6 6 18M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <button type="submit" class="header-search__submit" aria-label="Search">
+              <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="m20 20-3.5-3.5" />
+                </svg>
+            </button>
+          </form>
+
+          <div class="header-actions">
+            <button
+              type="button"
+              class="header-icon-btn header-search-toggle"
+              onclick="openMobileSearch()"
+              aria-label="Search"
+            >
+              <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="m20 20-3.5-3.5" />
+                </svg>
+            </button>
+            <button
+              type="button"
+              class="header-btn header-btn--home"
+              id="headerHomeBtn"
+              onclick="SHOW_SPECIFIC_DIV('youTubeContainer')"
+              hidden
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M3 10.5 12 3l9 7.5" />
+                <path d="M5 9.5V21h5v-6h4v6h5V9.5" />
+              </svg>
+              <span>Home</span>
+            </button>
+            <button
+              type="button"
+              class="header-btn header-btn--primary"
+              id="headerShortsBtn"
+              onclick="openyouTubeShortsWindow()"
+            >
+              <svg class="shorts-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path
+                  fill="currentColor"
+                  d="M17.77 10.32l-1.2-.5L18 9.06a3.74 3.74 0 0 0-3.5-6.62L6 6.94a3.74 3.74 0 0 0 .23 6.74l1.2.49L6 14.93a3.75 3.75 0 0 0 3.5 6.63l8.5-4.5a3.74 3.74 0 0 0-.23-6.74z"
+                />
+                <path class="shorts-icon__play" d="M10 14.65v-5.3L15 12z" />
+              </svg>
+              <span
+                ><span class="header-btn__extra">YouTube </span>Shorts</span
+              >
+            </button>
+          </div>
+        </div>
+      </header>
+
       <div id="loadingSpinner" style="display: none">
-        <div class="spinner"></div>
+        <!-- thin progress line along the top of the page -->
+        <span class="loader-topbar" aria-hidden="true"></span>
+        <div class="loader" role="status" aria-live="polite">
+          <div class="loader__ring" aria-hidden="true">
+            <span class="loader__logo">
+              <img src="images/logo_transparent.svg" alt="" />
+            </span>
+          </div>
+          <p class="loader__text">
+            Please wait<span class="loader__dots" aria-hidden="true"
+              ><i></i><i></i><i></i
+            ></span>
+          </p>
+          <span class="loader__bar" aria-hidden="true"></span>
+        </div>
       </div>
       <div class="infoPopup" id="successPopup">
         <div class="infoPopup-content">
@@ -60,7 +240,6 @@
           <div
             id="confirmationGridContainer"
             class="collection-table-container scrollable-content-table"
-            style="margin-top: 10px"
           >
             <table id="confirmationGridTable">
               <thead id="confirmationGridTHead" class="table-header">
@@ -81,91 +260,320 @@
       </div>
       <div id="youtubeContainerNew">
         <div class="popup" id="youTubeContainer" style="display: flex">
-          <div class="popup-content scrollable-content">
-            <h2>NKD PlayList</h2>
-
-            <button
-              class="green"
-              style="margin: 0px"
-              onclick="openyouTubeShortsWindow()"
-            >
-              Youtube Shorts
-            </button>
-
-            <div class="search-container">
-              <input
-                type="text"
-                id="youTubePlayListInput"
-                class="liveSearch"
-                placeholder="Select playlist..."
-                oninput="filterPlaylists(this.value)"
-              />
+          <div class="popup-content page-plain">
+            <div class="page-head">
+              <div class="page-head__text">
+                <h2>NKD Playlists</h2>
+                <p class="page-head__sub">
+                  Lectures, kathas and kirtans from the NKD YouTube channel
+                </p>
+              </div>
             </div>
 
             <div
               id="youTubePlayListImageCardView"
-              class="image_container"
+              class="image_container playlist-grid"
             ></div>
             <div id="youTubePlayListVideoContainer" class="video-list"></div>
           </div>
         </div>
 
         <div class="popup" id="youTubePlayListItemContainer">
-          <div class="popup-content scrollable-content">
-            <h2 id="playlistH2Ctrl">Loading...</h2>
-            <button
-              class="red"
-              style="margin-bottom: 10px"
-              onclick="backToPlayList()"
-            >
-              Back
-            </button>
+          <div class="popup-content page-plain watch">
+            <div class="watch__main">
+              <nav class="watch__crumbs" aria-label="Breadcrumb">
+                <button
+                  type="button"
+                  class="crumb-home"
+                  onclick="backToPlayList()"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M3 10.5 12 3l9 7.5" />
+                    <path d="M5 9.5V21h5v-6h4v6h5V9.5" />
+                  </svg>
+                  <span>Home</span>
+                </button>
+                <span class="crumb-sep" aria-hidden="true">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="m9 6 6 6-6 6" />
+                  </svg>
+                </span>
+                <span
+                  class="crumb-current"
+                  id="watchCrumbTitle"
+                  aria-current="page"
+                ></span>
+              </nav>
 
-            <div class="search-container">
-              <input
-                type="text"
-                id="youTubeItemInput"
-                class="liveSearch"
-                placeholder="Select video..."
-                oninput="filteryouTubeItem(this.value)"
-              />
-            </div>
-            <div
-              class="video-container"
-              id="youTubeVideoIframeDiv"
-              style="display: none"
-            >
-              <iframe
-                loading="lazy"
-                id="youTubeVideoIframe"
-                title="YouTube video player"
-                allow="
-                  accelerometer;
-                  autoplay;
-                  clipboard-write;
-                  encrypted-media;
-                  gyroscope;
-                  picture-in-picture;
-                "
-                allowfullscreen
+              <div class="video-container" id="youTubeVideoIframeDiv">
+                <iframe
+                  data-keep-player
+                  id="youTubeVideoIframe"
+                  title="YouTube video player"
+                  allow="
+                    accelerometer;
+                    autoplay;
+                    clipboard-write;
+                    encrypted-media;
+                    gyroscope;
+                    picture-in-picture;
+                  "
+                  allowfullscreen
+                >
+                </iframe>
+              </div>
+
+              <div class="watch__info">
+                <h1 class="watch__title" id="watchVideoTitle"></h1>
+                <div class="watch__bar">
+                  <div class="watch__channel">
+                    <span class="watch__avatar" aria-hidden="true">
+                      <img src="images/logo_transparent.svg" alt="" />
+                    </span>
+                    <span class="watch__channel-text">
+                      <span class="watch__channel-name">NKD YouTube</span>
+                      <span class="watch__meta" id="watchVideoMeta"></span>
+                    </span>
+                  </div>
+                  <div class="watch__actions">
+                    <button
+                      class="pill-btn"
+                      id="watchPrevBtn"
+                      onclick="playAdjacentVideo(-1)"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path d="M6 5v14" />
+                        <path d="m18 5-9 7 9 7z" fill="currentColor" />
+                      </svg>
+                      <span>Previous</span>
+                    </button>
+                    <button
+                      class="pill-btn"
+                      id="watchNextBtn"
+                      onclick="playAdjacentVideo(1)"
+                    >
+                      <span>Next</span>
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path d="M18 5v14" />
+                        <path d="m6 5 9 7-9 7z" fill="currentColor" />
+                      </svg>
+                    </button>
+                    <a
+                      class="pill-btn pill-btn--youtube"
+                      id="watchOnYouTube"
+                      href="https://www.youtube.com/"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <rect
+                          x="1.5"
+                          y="4.5"
+                          width="21"
+                          height="15"
+                          rx="4.5"
+                          fill="currentColor"
+                        />
+                        <path d="m10 9 5 3-5 3z" fill="#fff" />
+                      </svg>
+                      <span>YouTube</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <section
+                class="watch__chapters"
+                id="watchChapters"
+                aria-labelledby="watchChaptersTitle"
+                hidden
               >
-              </iframe>
+                <div class="watch__chapters-head">
+                  <h3 class="watch__chapters-title" id="watchChaptersTitle">
+                    Chapters
+                  </h3>
+                  <span class="watch__chapters-sub" id="watchChaptersSub"></span>
+                </div>
+                <div id="watchChapterList"></div>
+              </section>
             </div>
 
-            <div class="accordion" id="youTubeItemAccordion"></div>
+            <div class="watch__side">
+              <aside class="pl-panel" aria-label="Playlist">
+                <div class="pl-panel__head" onclick="togglePlaylistPanel()">
+                  <div class="pl-panel__heading">
+                    <h2 id="playlistH2Ctrl">Loading...</h2>
+                    <div class="pl-panel__sub" id="playlistPanelSub">
+                      NKD YouTube · <span>0 / 0</span>
+                    </div>
+                    <div class="pl-panel__next" id="playlistPanelNext"></div>
+                  </div>
+                  <button
+                    type="button"
+                    class="pl-panel__toggle"
+                    id="playlistPanelToggle"
+                    aria-expanded="true"
+                    aria-controls="youTubeItemAccordion"
+                    aria-label="Show or hide the playlist"
+                  >
+                    <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                  </button>
+                </div>
+                <div class="pl-panel__body">
+                  <div class="pl-panel__list" id="youTubeItemAccordion"></div>
+                </div>
+              </aside>
 
-            <div id="youTubeItemImageCardView" class="image_container"></div>
+              <section
+                class="watch__suggest side-card"
+                id="watchSuggest"
+                aria-labelledby="watchSuggestTitle"
+                hidden
+              >
+                <div class="side-card__head" onclick="toggleSideCard()">
+                  <span class="side-card__icon" aria-hidden="true">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M21 15V6" />
+                      <path d="M18.5 18a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
+                      <path d="M12 12H3" />
+                      <path d="M16 6H3" />
+                      <path d="M12 18H3" />
+                    </svg>
+                  </span>
+                  <span class="side-card__heading">
+                    <h3 class="side-card__title" id="watchSuggestTitle">
+                      Explore more playlists
+                    </h3>
+                    <span class="side-card__sub" id="watchSuggestSub"></span>
+                  </span>
+                  <!-- Shuffle button hidden for now (see shuffleSidePlaylists)
+                  <button
+                    type="button"
+                    class="pill-btn pill-btn--sm shuffle-btn"
+                    id="watchShuffleBtn"
+                    onclick="shuffleSidePlaylists()"
+                    aria-label="Show other playlists"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.7-1.1 2-1.7 3.3-1.7H22" />
+                      <path d="m18 2 4 4-4 4" />
+                      <path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2" />
+                      <path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8" />
+                      <path d="m18 14 4 4-4 4" />
+                    </svg>
+                    <span>Shuffle</span>
+                  </button>
+                  -->
+                  <button
+                    type="button"
+                    class="pl-panel__toggle"
+                    id="sideCardToggle"
+                    aria-expanded="true"
+                    aria-controls="watchSuggestList"
+                    aria-label="Show or hide more playlists"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="m6 9 6 6 6-6" />
+                    </svg>
+                  </button>
+                </div>
+                <!-- Collapsible part: animates its height open / closed -->
+                <div class="side-card__body">
+                  <div class="side-card__inner">
+                <div class="suggest-list" id="watchSuggestList"></div>
+                <button
+                  type="button"
+                  class="side-card__all"
+                  onclick="backToPlayList()"
+                >
+                  <span>View all playlists</span>
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </button>
+                  </div>
+                </div>
+              </section>
+            </div>
           </div>
         </div>
 
         <div class="popup" id="youTubePlayVideoContainer">
           <div class="popup-content scrollable-content">
             <h2>Video</h2>
-            <button
-              class="red"
-              style="margin-bottom: 10px"
-              onclick="SHOW_SPECIFIC_DIV('youTubeContainer')"
-            >
+            <button class="red" onclick="SHOW_SPECIFIC_DIV('youTubeContainer')">
               Back
             </button>
 
@@ -181,56 +589,231 @@
 
       <div id="youtubeshortsNew">
         <div class="popup" id="youTubeShortsContainer">
-          <div class="popup-content scrollable-content">
-            <h2>NKD Shorts</h2>
-            <button
-              class="red"
-              style="margin-bottom: 10px"
-              onclick="SHOW_SPECIFIC_DIV('youTubeContainer')"
-            >
-              Back
-            </button>
+          <div class="popup-content page-plain shorts-page">
+            <div class="shorts-layout">
+              <!-- Player, pinned on desktop while the grid scrolls;
+                   full screen on phones -->
+              <div class="shorts-stage">
+                <!-- Phones only: opens the "All shorts" sheet -->
+                <div class="shorts-tabs">
+                  <span class="shorts-bar__text">
+                    <span class="shorts-bar__title" id="shortsBarTitle"></span>
+                    <span class="shorts-bar__meta" id="shortsBarMeta"></span>
+                  </span>
+                  <button
+                    type="button"
+                    class="shorts-tab"
+                    id="shortsAllTab"
+                    aria-expanded="false"
+                    aria-controls="shortsBrowse"
+                    onclick="openShortsSheet()"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <rect x="3" y="3" width="7" height="7" rx="1.5" />
+                      <rect x="14" y="3" width="7" height="7" rx="1.5" />
+                      <rect x="3" y="14" width="7" height="7" rx="1.5" />
+                      <rect x="14" y="14" width="7" height="7" rx="1.5" />
+                    </svg>
+                    <span>All shorts</span>
+                    <span class="shorts-tab__count" id="shortsTabCount"></span>
+                  </button>
+                </div>
+                <div class="shorts-player">
+                  <div
+                    class="video-container video-container--short"
+                    id="youTubeShortVideoIframeDiv"
+                  >
+                    <iframe
+                      id="youTubeShortVideoIframe"
+                      title="YouTube Shorts player"
+                      allow="
+                        accelerometer;
+                        autoplay;
+                        clipboard-write;
+                        encrypted-media;
+                        gyroscope;
+                        picture-in-picture;
+                      "
+                      allowfullscreen
+                    >
+                    </iframe>
+                    <!-- Previous / Next float over the bottom of the video -->
+                    <div class="shorts-controls">
+                      <button
+                        type="button"
+                        class="shorts-ctrl"
+                        id="shortPrevBtn"
+                        onclick="playAdjacentShort(-1)"
+                        aria-label="Previous short"
+                      >
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2.4"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                        >
+                          <path d="m15 18-6-6 6-6" />
+                        </svg>
+                        <span>Previous</span>
+                      </button>
+                      <div class="shorts-progress" aria-live="polite">
+                        <span class="shorts-progress__text" id="shortPosition"></span>
+                        <span class="shorts-progress__bar" aria-hidden="true"
+                          ><i id="shortProgressFill"></i
+                        ></span>
+                      </div>
+                      <button
+                        type="button"
+                        class="shorts-ctrl shorts-ctrl--next"
+                        id="shortNextBtn"
+                        onclick="playAdjacentShort(1)"
+                        aria-label="Next short"
+                      >
+                        <span>Next</span>
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2.4"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                        >
+                          <path d="m9 18 6-6-6-6" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
 
-            <div class="search-container">
-              <input
-                type="text"
-                id="youTubeShortsPlayListInput"
-                class="liveSearch"
-                placeholder="Select shorts..."
-                oninput="filterShorts(this.value)"
-              />
+                <div class="shorts-info">
+                  <h3 class="shorts-info__title" id="shortTitle"></h3>
+                  <div class="shorts-info__bar">
+                    <div class="watch__channel">
+                      <span class="watch__avatar" aria-hidden="true">
+                        <img src="images/logo_transparent.svg" alt="" />
+                      </span>
+                      <span class="watch__channel-text">
+                        <span class="watch__channel-name">NKD YouTube</span>
+                        <span class="watch__meta" id="shortMeta"></span>
+                      </span>
+                    </div>
+                    <a
+                      class="pill-btn pill-btn--youtube"
+                      id="shortOnYouTube"
+                      href="https://www.youtube.com/"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <rect
+                          x="1.5"
+                          y="4.5"
+                          width="21"
+                          height="15"
+                          rx="4.5"
+                          fill="currentColor"
+                        />
+                        <path d="m10 9 5 3-5 3z" fill="#fff" />
+                      </svg>
+                      <span>YouTube</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Phones: dimmed backdrop behind the "All shorts" sheet -->
+              <div
+                class="shorts-sheet-backdrop"
+                onclick="closeShortsSheet()"
+              ></div>
+              <div class="shorts-browse" id="shortsBrowse">
+                <span class="shorts-sheet-handle" aria-hidden="true"></span>
+                <div class="shorts-browse__head">
+                  <span class="shorts-browse__logo" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path fill="currentColor" d="M17.77 10.32l-1.2-.5L18 9.06a3.74 3.74 0 0 0-3.5-6.62L6 6.94a3.74 3.74 0 0 0 .23 6.74l1.2.49L6 14.93a3.75 3.75 0 0 0 3.5 6.63l8.5-4.5a3.74 3.74 0 0 0-.23-6.74z" />
+                      <path fill="#ff0033" d="M10 14.65v-5.3L15 12z" />
+                    </svg>
+                  </span>
+                  <div class="shorts-browse__text">
+                    <h2 class="shorts-browse__title">NKD Shorts</h2>
+                    <p class="shorts-browse__sub">
+                      Quick clips of wisdom, kirtan and pastimes
+                    </p>
+                  </div>
+                  <div class="shorts-browse__stats">
+                    <span class="stat-chip stat-chip--red">
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <rect x="6" y="2.5" width="12" height="19" rx="3" />
+                        <path d="m10.5 9.5 4 2.5-4 2.5z" />
+                      </svg>
+                      <span id="shortsCount"></span>
+                    </span>
+                    <span class="stat-chip" id="shortsLatestChip" hidden>
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <circle cx="12" cy="12" r="9" />
+                        <path d="M12 7v5l3 2" />
+                      </svg>
+                      <span id="shortsLatest"></span>
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    class="shorts-sheet-close"
+                    onclick="closeShortsSheet()"
+                    aria-label="Close all shorts"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.4"
+                      stroke-linecap="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M18 6 6 18M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+                <div class="shorts-grid" id="youTubeShortsImageCardView"></div>
+              </div>
             </div>
-            <div
-              class="video-container"
-              id="youTubeShortVideoIframeDiv"
-              style="display: none"
-            >
-              <iframe
-                loading="lazy"
-                id="youTubeShortVideoIframe"
-                title="YouTube video player"
-                allow="
-                  accelerometer;
-                  autoplay;
-                  clipboard-write;
-                  encrypted-media;
-                  gyroscope;
-                  picture-in-picture;
-                "
-                allowfullscreen
-              >
-              </iframe>
-            </div>
-            <div id="youTubeShortsImageCardView" class="image_container"></div>
           </div>
         </div>
       </div>
     </div>
 
-    <script src="JavascriptYouTube.js"></script>
-    <script src="JavascriptYouTubeNested.js"></script>
-    <script src="ScriptCommon.js"></script>
-    <script src="ScriptConstants.js"></script>
+    <script src="JavascriptYouTube.js?v=69"></script>
+    <script src="ScriptCommon.js?v=69"></script>
+    <script src="ScriptConstants.js?v=69"></script>
     <script src="Script.js"></script>
   </body>
 </html>
